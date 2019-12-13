@@ -1,0 +1,94 @@
+<!doctype html> <html> <head>
+	<meta charset="utf-8" />
+	<title>Sorting Algorithm Race</title>
+	<link rel="stylesheet" href="assets/style.css"/>
+	<style>
+		 
+	</style>
+</head>
+
+<body>
+<h1> CPSC 332-02 Project 3 Sorting Race</h1>
+<h4>William Covington</h4>
+
+<canvas id="grid" width="900" height="730"></canvas>
+
+</body>
+<script src="assets/Manager.js"></script>
+<script src="assets/SelectionSort.js"></script>
+<script src="assets/QuickSort.js"></script>
+<script src="assets/MergeSort.js"></script>
+
+<script>
+	var canvas = document.getElementById( "grid" );
+	var context = canvas.getContext( "2d" );
+
+	// Test Arrays
+    // Converted from Hexadecimal to Decimal
+	test1 = [0, 11, 10, 3, 2, 8, 4, 7, 6, 5, 1, 9];
+	test2 = [0, 10, 9, 8, 1, 10, 3, 9, 2, 0, 1, 1];
+	test3 = [1, 6, 3, 8, 9, 4, 0, 10, 5, 2, 11, 7];
+	test4 = [1, 9, 8, 4, 1, 11, 3, 8, 2, 6, 2, 5];
+	test5 = [2, 9, 7, 11, 4, 0, 1, 6, 3, 8, 10, 5];
+	test6 = [2, 6, 1, 0, 9, 4, 8, 7, 8, 6, 2, 6];
+	test7 = [3, 4, 5, 7, 1, 9, 2, 0, 6, 8, 11, 10];
+	test8 = [3, 5, 6, 10, 10, 0, 2, 3, 11, 7, 2, 4];
+	test9 = [4, 11, 6, 0, 7, 9, 10, 2, 1, 8, 3, 5];
+	test10 = [4, 0, 11, 0, 6, 5, 6, 6, 7, 1, 0, 10];
+	test11 = [5, 2, 8, 1, 10, 11, 3, 4, 7, 9, 0, 6];
+	test12 = [5, 7, 5, 0, 6, 8, 4, 11, 8, 9, 3, 4];
+	test13 = [6, 9, 8, 7, 2, 11, 3, 10, 5, 4, 1, 0];
+	test14 = [6, 10, 2, 3, 0, 5, 3, 0, 4, 7, 8, 1];
+	test15 = [7, 0, 1, 10, 6, 9, 3, 5, 4, 2, 11, 8];
+	test16 = [7, 8, 5, 2, 8, 6, 1, 0, 3, 4, 2, 9];
+	test17 = [8, 7, 3, 10, 9, 4, 2, 5, 11, 1, 6, 0];
+	test18 = [8, 10, 1, 5, 9, 3, 4, 7, 9, 0, 8, 5];
+	test19 = [9, 0, 11, 3, 4, 2, 7, 5, 6, 1, 8, 10];
+	test20 = [9, 9, 11, 5, 3, 5, 1, 10, 3, 3, 10, 11];
+	test21 = [10, 4, 0, 11, 5, 8, 6, 1, 7, 9, 2, 3];
+	test22 = [10, 3, 9, 5, 9, 10, 2, 2, 10, 4, 4, 4];
+	test23 = [11, 8, 10, 4, 6, 3, 7, 9, 0, 1, 5, 2];
+	test24 = [11, 6, 0, 0, 5, 10, 6, 2, 7, 11, 2, 3];
+
+    //Puts all test arrays into one array for random selection
+	arraylist = [test1, test2, test3, test4, test5, test6, test7, test8, test9, test10, test11, test12, test13, test14, test15, test16, test17,test18, test19, test20, test21, test22, test23, test24];
+    
+    //Select a random number between and including 1 - 24
+    var random = getRandomInt(1, 24);
+    
+    //Select and Assign Test Array
+    var testArray = arraylist[random];
+
+    //Starting X Position of Each List.
+    //Used for Drawing Lists.
+    var MergePosX = 10;
+    var QuickPosX = 320;
+    var SelectPosX = 650;
+    
+    //Starting Y Position for All Lists.
+    //Used for Drawing Lists. Changes After Each Run of the Race Algorithm
+    var listPosY = 75;
+
+    //Change in Y Position After Each Step to Display List on the Next Line
+    var ChangeInPositionY = 25;
+
+    //Draws Headers for Each Sorting Algorithm
+	drawWord(context, "Merge Sort", 60, 30, "black");
+	drawWord(context, "Quick Sort", 375, 30, "black");
+	drawWord(context, "Selection Sort", 700, 30, "black");
+
+    //Prints the Original State of the Testing Array Before Running the Sorting Algorithm.
+    //Arrays are Printed After Each Step of the Sorting Algorithm;
+	printList(context, testArray, MergePosX, listPosY);
+	printList(context, testArray, QuickPosX, listPosY);
+    printList(context, testArray, SelectPosX, listPosY);
+    
+    //Increments Y Position So Next Line Can Be Printed After the First Step.
+    listPosY += (ChangeInPositionY * 2);
+
+    //Declares the Maximum Number of Steps the Sorting Alogithm Will Run.
+    var StepsRemaining = 20;
+
+    RaceManager(context, testArray);
+
+	</script>
