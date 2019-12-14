@@ -1,5 +1,4 @@
 function selectionStep(selectionArray, index){
-	//var len = array_length(selectionArray);
 	var len = selectionArray.length;
 
 	for (var i = index; i < len - 1; i = i + 1) {
@@ -14,8 +13,6 @@ function selectionStep(selectionArray, index){
 			
 			var returnInfo = [selectionArray, false];
 			return returnInfo;
-
-
         } else {}
 	}
 	var returnInfo = [selectionArray, true];

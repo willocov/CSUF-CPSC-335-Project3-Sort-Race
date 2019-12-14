@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<h1> CPSC 335-05 Project 3 Sorting Race</h1>
+<h1> CPSC 332-05 Project 3 Sorting Race</h1>
 <h4>William Covington</h4>
 
 <canvas id="grid" width="900" height="730"></canvas>
@@ -75,6 +75,8 @@
     //Draws Headers for Each Sorting Algorithm
 	drawWord(context, "Merge Sort", 60, 30, "black");
 	drawWord(context, "Quick Sort", 375, 30, "black");
+	drawWord(context, "Rightmost element is pivot.", 315, 42, "grey");
+	drawWord(context, "Elements equal to pivot are move to the right side.", 315, 55, "grey");
 	drawWord(context, "Selection Sort", 700, 30, "black");
 
     //Prints the Original State of the Testing Array Before Running the Sorting Algorithm.
@@ -89,6 +91,7 @@
     //Declares the Maximum Number of Steps the Sorting Alogithm Will Run.
     var StepsRemaining = 20;
 
+	//Begin the sorting race
     RaceManager(context, testArray);
 
 	</script>

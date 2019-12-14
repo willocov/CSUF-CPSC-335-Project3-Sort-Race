@@ -1,12 +1,14 @@
 function getRandomInt(min, max) {
+	//Returns a random int between min and max
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function drawWord(context, word, posx, posy, color) {
+	//Draws a string or chars
 	context.save();
-	context.font="20px sans-serif";
+	context.font="15px sans-serif";
 	context.beginPath();
 	context.fillStyle = color;
 	context.fillText(word, posx, posy);
@@ -15,6 +17,7 @@ function drawWord(context, word, posx, posy, color) {
 }
 
 function printList(context, array, posx, posy) {
+	//Prints an array
 	for (var i of array) {
 		context.save();
 		context.font ="20px sans-serrif";
@@ -29,33 +32,44 @@ function printList(context, array, posx, posy) {
 
 function RaceManager(context, testArray) {
 	//Variables used for tracking alogrithm progress and gui
+
+	//Printing variables
 	mergePosX = 10;
 	quickPosX = 320;
 	selectPosX = 650;
 	linePosY = 100;
 	changeInPositionY = 25;
+	
+	//Step counter
 	remainingSteps = 20;
+
+	//Arrays for each sorting algorithm
 	var mergeArray = testArray.slice();
 	var quickArray = testArray.slice();
 	var selectionArray = testArray.slice();
+	
+	//variables used to print arrays during recursion
 	selectionIndex = 0;
 	quickIndex = 0;
 	quickMaxIndex = 1;
 	mergeStepsRemaining = 1;
+	
+	//Finished flags
 	isMergeFinished = false;
 	isQuickFinished = false;
 	isSelectionFinished = false;
 
+	//Begins the first step
 	NextStep(context, mergePosX, quickPosX, selectPosX, linePosY, remainingSteps, mergeStepsRemaining, quickIndex, quickMaxIndex, mergeArray, quickArray, selectionArray, selectionIndex, isMergeFinished, isQuickFinished, isSelectionFinished);
-	
-
 }
 
 function NextStep(context, mergePosX, quickPosX, selectPosX, linePosY, remainingSteps, mergeStepsRemaining, quickIndex, quickMaxIndex, mergeArray, quickArray, selectionArray, selectionIndex, isMergeFinished, isQuickFinished, isSelectionFinished){
 	//Function continues to loop
 	//Prints array at end of each step
 	//Pauses for 0.5 seconds and calls itself with setTimeout
-	if(remainingSteps = 0){	//Break Case for SetTimeout
+	
+	//Stop program if the max number of steps have been reached
+	if(remainingSteps = 0){	
 		return;
 	}
 
@@ -63,17 +77,14 @@ function NextStep(context, mergePosX, quickPosX, selectPosX, linePosY, remaining
 	if(isMergeFinished == false){
 		var sortedMergeArray = mergeSort(mergeArray, mergeStepsRemaining);
 	}
+
 	//Run Step of Quick Sort
 	let quickDontPrint = false;
 	const quickConstArray = quickArray.slice();
 	if(isQuickFinished == false){
 		var quickReturnInfo = quickStep(0, quickArray.length - 1, quickArray, 0, quickMaxIndex);
-		//if(quickConstArray == quickReturnInfo[0]){
-		//	quickDontPrint = true;
-		//}
 		quickArray = quickReturnInfo[0];
 		quickFinished = quickReturnInfo[1];
-		
 	}
 
 	//Run step of Selection Sort
@@ -86,7 +97,7 @@ function NextStep(context, mergePosX, quickPosX, selectPosX, linePosY, remaining
 		}
 	}
 
-	//Print Arrays
+	//Print  Merge Array
 	if(isMergeFinished != true){
 		printList(context, sortedMergeArray, mergePosX, linePosY);
 		if(isArraySorted(sortedMergeArray) == true){
@@ -94,16 +105,21 @@ function NextStep(context, mergePosX, quickPosX, selectPosX, linePosY, remaining
 		}
 	}
 
+	//Print Selection array
 	if(isSelectionFinished != true){
 		printList(context, selectionArray, selectPosX, linePosY);
 	}
+
+	//Print Quick array
 	if(isQuickFinished != true && quickDontPrint != true){
 		printList(context, quickArray, quickPosX, linePosY);
 		if(isArraySorted(quickArray) == true){
 			isQuickFinished = true;
 		}
 	}
-	//Alter variables
+
+
+	//increment variables
 	linePosY += changeInPositionY;
 	remainingSteps--;
 	selectionIndex++;
@@ -112,6 +128,5 @@ function NextStep(context, mergePosX, quickPosX, selectPosX, linePosY, remaining
 
 	//Pause for 0.5 Seconds and run again
 	setTimeout(NextStep, 500, context, mergePosX, quickPosX, selectPosX, linePosY, remainingSteps, mergeStepsRemaining, quickIndex, quickMaxIndex, mergeArray, quickConstArray, selectionArray, selectionIndex, isMergeFinished, isQuickFinished, isSelectionFinished);
-
 }
 
